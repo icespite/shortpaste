@@ -1,4 +1,4 @@
-module git.adyanth.site/adyanth/shortpaste
+module github.com/timeforaninja/shortpaste
 
 go 1.16
 

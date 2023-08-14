@@ -8,7 +8,7 @@ RUN go mod download
 
 COPY *.go ./
 COPY cmd cmd
-COPY templates ./templates
+COPY internal/api/resolve_shorts/templates ./templates
 RUN CGO_ENABLED=1 go build -o /out/ ./...
 
 FROM node:16.19.1-alpine3.17 as frontend-build

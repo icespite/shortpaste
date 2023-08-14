@@ -53,8 +53,8 @@ You can customize the behavior using environment variables. Here is a list of co
 
 Here are some screenshots to get a taste of it, see the [demo](https://shortpaste.herokuapp.com/) for more :)
 
-| Type  |             Create              |                View                |
-| :---: | :-----------------------------: | :--------------------------------: |
-| Links | ![Link Upload](images/link.png) | ![Link View](images/link_link.png) |
-| Text  | ![Text Upload](images/text.png) | ![Text View](images/text_link.png) |
-| Files | ![File Upload](images/file.png) | ![File View](images/file_link.png) |
+| Type  |                Create                |                  View                   |
+| :---: |:------------------------------------:|:---------------------------------------:|
+| Links | ![Link Upload](docs/images/link.png) | ![Link View](docs/images/link_link.png) |
+| Text  | ![Text Upload](docs/images/text.png) | ![Text View](docs/images/text_link.png) |
+| Files | ![File Upload](docs/images/file.png) | ![File View](docs/images/file_link.png) |
