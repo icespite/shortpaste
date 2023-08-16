@@ -25,12 +25,12 @@ func NewApp(bind, storagePath, username, password string, link307Redirect bool) 
 		panic(fmt.Errorf("mkdir error %v", err))
 	}
 
-	ddb, err := data_db.NewDataDB(storagePath, username, password)
+	ddb, err := data_db.NewSQLiteDataDB(storagePath, username, password)
 	if err != nil {
 		panic(fmt.Errorf("data db error %v", err))
 	}
 
-	fdb := file_db.NewFileDB(storagePath)
+	fdb := file_db.NewLocalFileDB(storagePath)
 
 	return App{
 		bind:            bind,

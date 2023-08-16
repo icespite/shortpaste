@@ -47,7 +47,6 @@ You can customize the behavior using environment variables. Here is a list of co
 | `SP_307_REDIRECT`    |                   | Setting this to anything causes a 307 redirect to be sent instead of showing the landing page for shortened links. |
 | `SP_USERNAME`        | `admin`           | Sets the username to login to the UI (only applies to creating resources, links will still work fine)              |
 | `SP_PASSWORD`        | `admin`           | Sets the password to login to the UI (only applies to creating resources, links will still work fine)              |
-| `SP_NOAUTH`          |                   | Setting this to anything bypasses authentication for creating resources.                                           |
 
 ## Screenshots
 

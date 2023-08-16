@@ -11,6 +11,7 @@ import (
 func HandleCreateLink(w http.ResponseWriter, r *http.Request, app types.AppInf) {
 	link := types.Link{}
 	if err := json.NewDecoder(r.Body).Decode(&link); err != nil {
+		utils.LogIfDebug("Failed to decode payload: %s", err)
 		utils.OnClientError(w, err, "check the input and try again")
 		return
 	}
@@ -19,11 +20,13 @@ func HandleCreateLink(w http.ResponseWriter, r *http.Request, app types.AppInf) 
 		link.ID = id
 	}
 	if err := link.Validate(); err != nil {
+		utils.LogIfDebug("Failed to validate payload: %s", err)
 		utils.OnClientError(w, err, "check the input and try again")
 		return
 	}
 	err := app.GetDataDB().Create(&link).Error
 	if err != nil {
+		utils.LogIfDebug("Failed to insert into DB: %s", err)
 		utils.OnServerError(w, err, "failed to create DB entry")
 		return
 	}

@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"path"
 	"strings"
+	"time"
 )
 
 func ResolveShortFile(app types.AppInf) http.HandlerFunc {
@@ -38,12 +39,13 @@ func ResolveShortFile(app types.AppInf) http.HandlerFunc {
 
 			// update the access counter
 			file.DownloadCount += 1
+			file.LastHit = time.Now().Unix()
 			ddb.Save(&file)
 			return
 		}
 
 		// load template and embed data
-		t, err := file_templates.LoadTemplate("file_templates/files.html")
+		t, err := file_templates.LoadTemplate("files.html")
 		if err != nil {
 			utils.OnServerError(w, err, "failed to parse template")
 			return
@@ -67,9 +69,5 @@ func ResolveShortFile(app types.AppInf) http.HandlerFunc {
 			Size:  utils.IECFormat(fi.Size()),
 		}
 		t.Execute(w, data)
-
-		// update the access counter
-		file.HitCount += 1
-		ddb.Save(&file)
 	}
 }

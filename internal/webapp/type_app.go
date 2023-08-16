@@ -1,26 +1,25 @@
 package api
 
 import (
-	"github.com/timeforaninja/shortpaste/internal/data_db"
-	"github.com/timeforaninja/shortpaste/internal/file_db"
+	"github.com/timeforaninja/shortpaste/internal/types"
 )
 
 // App struct containing the bind address.
 type App struct {
 	bind            string
 	link307Redirect bool
-	fileDB          *file_db.FileDB
-	dataDB          *data_db.DataDB
+	fileDB          types.FileDB
+	dataDB          types.DataDB
 }
 
 func (app *App) ShouldLink307Redirect() bool {
 	return app.link307Redirect
 }
 
-func (app *App) GetFileDB() *file_db.FileDB {
+func (app *App) GetFileDB() types.FileDB {
 	return app.fileDB
 }
 
-func (app *App) GetDataDB() *data_db.DataDB {
+func (app *App) GetDataDB() types.DataDB {
 	return app.dataDB
 }

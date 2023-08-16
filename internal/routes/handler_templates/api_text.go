@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"path"
 	"strings"
+	"time"
 )
 
 func ResolveShortText(app types.AppInf) http.HandlerFunc {
@@ -38,12 +39,13 @@ func ResolveShortText(app types.AppInf) http.HandlerFunc {
 
 			// update the access counter
 			text.HitCount += 1
+			text.LastHit = time.Now().Unix()
 			ddb.Save(&text)
 			return
 		}
 
 		// load template and embed data
-		t, err := file_templates.LoadTemplate("file_templates/text.html")
+		t, err := file_templates.LoadTemplate("text.html")
 		if err != nil {
 			utils.OnServerError(w, err, "failed to parse template")
 			return
@@ -71,9 +73,5 @@ func ResolveShortText(app types.AppInf) http.HandlerFunc {
 			Text:  html.EscapeString(string(textContent)),
 		}
 		t.Execute(w, data)
-
-		// update the access counter
-		text.HitCount += 1
-		ddb.Save(&text)
 	}
 }

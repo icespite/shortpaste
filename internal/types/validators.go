@@ -1,17 +1,17 @@
-package data_db
+package types
 
 import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-func (link *types.Link) Validate() error {
+func (link *Link) Validate() error {
 	return validator.New().Struct(link)
 }
 
-func (file *types.File) Validate() error {
+func (file *File) Validate() error {
 	return validator.New().Struct(file)
 }
 
-func (text *types.Text) Validate() error {
+func (text *Text) Validate() error {
 	return validator.New().Struct(text)
 }

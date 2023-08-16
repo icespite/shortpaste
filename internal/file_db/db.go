@@ -1,24 +1,25 @@
 package file_db
 
 import (
+	"github.com/timeforaninja/shortpaste/internal/types"
 	"io"
 	"net/http"
 	"os"
 	"path"
 )
 
-// FileDB struct containing the storage path.
-type FileDB struct {
+// LocalFileDB struct containing the storage path.
+type LocalFileDB struct {
 	storagePath string
 }
 
-func NewFileDB(storagePath string) *FileDB {
-	return &FileDB{
+func NewLocalFileDB(storagePath string) types.FileDB {
+	return &LocalFileDB{
 		storagePath: storagePath,
 	}
 }
 
-func (db *FileDB) Write(subPath, content string) error {
+func (db *LocalFileDB) Write(subPath, content string) error {
 	filePath := path.Join(db.storagePath, "data", subPath)
 
 	// make sure path exists
@@ -35,7 +36,7 @@ func (db *FileDB) Write(subPath, content string) error {
 	return nil
 }
 
-func (db *FileDB) WriteStream(subPath string, content io.Reader) error {
+func (db *LocalFileDB) WriteStream(subPath string, content io.Reader) error {
 	filePath := path.Join(db.storagePath, "data", subPath)
 
 	// make sure path exists
@@ -58,18 +59,18 @@ func (db *FileDB) WriteStream(subPath string, content io.Reader) error {
 	return nil
 }
 
-func (db *FileDB) ServeFile(w http.ResponseWriter, r *http.Request, subPath string) {
+func (db *LocalFileDB) ServeFile(w http.ResponseWriter, r *http.Request, subPath string) {
 	filePath := path.Join(db.storagePath, "data", subPath)
 	http.ServeFile(w, r, filePath)
 }
 
-func (db *FileDB) Read(subPath string) ([]byte, error) {
+func (db *LocalFileDB) Read(subPath string) ([]byte, error) {
 	// "texts" , fileID+"."+fileExt
 	filePath := path.Join(db.storagePath, "data", subPath)
 	return os.ReadFile(filePath)
 }
 
-func (db *FileDB) Stat(subPath string) (os.FileInfo, error) {
+func (db *LocalFileDB) Stat(subPath string) (os.FileInfo, error) {
 	filePath := path.Join(db.storagePath, "data", subPath)
 	return os.Stat(filePath)
 }
