@@ -9,17 +9,17 @@ import (
 )
 
 // LocalFileDB struct containing the storage path.
-type LocalFileDB struct {
+type localFileDB struct {
 	storagePath string
 }
 
 func NewLocalFileDB(storagePath string) types.FileDB {
-	return &LocalFileDB{
+	return &localFileDB{
 		storagePath: storagePath,
 	}
 }
 
-func (db *LocalFileDB) Write(subPath, content string) error {
+func (db *localFileDB) Write(subPath, content string) error {
 	filePath := path.Join(db.storagePath, "data", subPath)
 
 	// make sure path exists
@@ -36,7 +36,7 @@ func (db *LocalFileDB) Write(subPath, content string) error {
 	return nil
 }
 
-func (db *LocalFileDB) WriteStream(subPath string, content io.Reader) error {
+func (db *localFileDB) WriteStream(subPath string, content io.Reader) error {
 	filePath := path.Join(db.storagePath, "data", subPath)
 
 	// make sure path exists
@@ -59,18 +59,18 @@ func (db *LocalFileDB) WriteStream(subPath string, content io.Reader) error {
 	return nil
 }
 
-func (db *LocalFileDB) ServeFile(w http.ResponseWriter, r *http.Request, subPath string) {
+func (db *localFileDB) ServeFile(w http.ResponseWriter, r *http.Request, subPath string) {
 	filePath := path.Join(db.storagePath, "data", subPath)
 	http.ServeFile(w, r, filePath)
 }
 
-func (db *LocalFileDB) Read(subPath string) ([]byte, error) {
+func (db *localFileDB) Read(subPath string) ([]byte, error) {
 	// "texts" , fileID+"."+fileExt
 	filePath := path.Join(db.storagePath, "data", subPath)
 	return os.ReadFile(filePath)
 }
 
-func (db *LocalFileDB) Stat(subPath string) (os.FileInfo, error) {
+func (db *localFileDB) Stat(subPath string) (os.FileInfo, error) {
 	filePath := path.Join(db.storagePath, "data", subPath)
 	return os.Stat(filePath)
 }

@@ -8,7 +8,7 @@ import (
 )
 
 // SQLiteDB struct containing the storage path and the db connector for sqlite.
-type SQLiteDB struct {
+type sqliteDB struct {
 	storagePath string
 	db          *gorm.DB
 	user        string
@@ -22,7 +22,7 @@ func NewSQLiteDataDB(storagePath, user, password string) (types.DataDB, error) {
 		return nil, err
 	}
 
-	return &SQLiteDB{
+	return &sqliteDB{
 		storagePath: storagePath,
 		db:          db,
 		user:        user,
@@ -30,28 +30,28 @@ func NewSQLiteDataDB(storagePath, user, password string) (types.DataDB, error) {
 	}, nil
 }
 
-func (db *SQLiteDB) AutoMigrate() {
+func (db *sqliteDB) AutoMigrate() {
 	db.db.AutoMigrate(&types.Link{})
 	db.db.AutoMigrate(&types.File{})
 	db.db.AutoMigrate(&types.Text{})
 }
 
-func (db *SQLiteDB) GetUserPass() (string, string) {
+func (db *sqliteDB) GetUserPass() (string, string) {
 	return db.user, db.password
 }
 
-func (db *SQLiteDB) Find(dest interface{}, conds ...interface{}) *gorm.DB {
+func (db *sqliteDB) Find(dest interface{}, conds ...interface{}) *gorm.DB {
 	return db.db.Find(dest, conds)
 }
 
-func (db *SQLiteDB) First(dest interface{}, conds ...interface{}) *gorm.DB {
+func (db *sqliteDB) First(dest interface{}, conds ...interface{}) *gorm.DB {
 	return db.db.First(dest, conds)
 }
 
-func (db *SQLiteDB) Save(value interface{}) *gorm.DB {
+func (db *sqliteDB) Save(value interface{}) *gorm.DB {
 	return db.db.Save(value)
 }
 
-func (db *SQLiteDB) Create(value interface{}) *gorm.DB {
+func (db *sqliteDB) Create(value interface{}) *gorm.DB {
 	return db.db.Create(value)
 }
