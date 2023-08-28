@@ -73,5 +73,11 @@ func ResolveShortText(app types.AppInf) http.HandlerFunc {
 			Text:  html.EscapeString(string(textContent)),
 		}
 		t.Execute(w, data)
+
+		// update the access counter
+		text.HitCount += 1
+		text.LastHit = time.Now().Unix()
+		ddb.Save(&text)
+		return
 	}
 }

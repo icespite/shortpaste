@@ -54,8 +54,8 @@
         window.location.replace("{{ .Link }}");
       }, 5000);
       const y = setInterval(() => {
-        span = document.getElementById("sec");
-        span.innerText = span.innerText > 0 ? span.innerText - 1 : 0;
+        const span = document.getElementById("sec");
+        span.innerText = (span.innerText > 0 ? span.innerText - 1 : 0).toString();
       }, 1000);
 
       function stop() {

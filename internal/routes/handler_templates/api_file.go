@@ -45,7 +45,7 @@ func ResolveShortFile(app types.AppInf) http.HandlerFunc {
 		}
 
 		// load template and embed data
-		t, err := file_templates.LoadTemplate("files.html")
+		t, err := file_templates.LoadTemplate("file.html")
 		if err != nil {
 			utils.OnServerError(w, err, "failed to parse template")
 			return
