@@ -1,37 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text {{ .ID }}</title>
-    <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.1.0/styles/default.min.css">
-    <script src="//unpkg.com/@highlightjs/cdn-assets@11.1.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.8.0/styles/default.min.css">
+    <script src="//unpkg.com/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
     <style>
-        body {
-            font-family: Roboto, sans-serif !important;
-        }
+      body {
+        font-family: Roboto, sans-serif !important;
+      }
 
-        .title {
-            font-size: 1.25rem !important;
-            font-weight: 500;
-            line-height: 2rem;
-            letter-spacing: 0.0125em !important;
-            color: #2c3e50;
-        }
+      .title {
+        font-size: 1.25rem !important;
+        font-weight: 500;
+        line-height: 2rem;
+        letter-spacing: 0.0125em !important;
+        color: #2c3e50;
+      }
+
+      pre {
+        position: relative;
+      }
+
+      #copyButton {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #2c3e50;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1 class="title" style="text-align: center; margin: 2em;">
-        <a href="/static" style="color: inherit;text-decoration: inherit;">Short{Paste}</a>
+      <a href="/" style="color: inherit;text-decoration: inherit;">Short{Paste}</a>
     </h1>
     <h3 class="title" style="text-align: left;">Contents of {{ .ID }}</h3>
     <pre>
-        <code class="{{ .Class }}">{{ .Text }}</code>
+        <button id="copyButton">Copy All</button>
+        <code id="codeContent" class="{{ .Class }}">{{ .Text }}</code>
     </pre>
-</body>
+    <script>
+      const copyButton = document.getElementById("copyButton");
+      copyButton.addEventListener("click", async function() {
+        const codeContent = document.getElementById("codeContent").innerText;
+        try {
+          await navigator.clipboard.writeText(codeContent);
+
+          // Change button text to a checkmark
+          copyButton.innerHTML = "&#10003;";
+
+          // Change it back to 'Copy All' after 2 seconds
+          setTimeout(function() {
+            copyButton.textContent = 'Copy All';
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+        }
+      });
+    </script>
+  </body>
 
 </html>
