@@ -1,15 +1,11 @@
-FROM golang:alpine AS backend-build
+FROM golang:alpine3.18 AS backend-build
 
 WORKDIR /usr/local/go/src/git.adyanth.site/adyanth/shortpaste/
 
 RUN apk add --no-cache make build-base
-COPY go.* ./
-RUN go mod download
-
-COPY *.go ./
-COPY cmd cmd
-COPY internal/api/resolve_shorts/templates ./templates
-RUN CGO_ENABLED=1 go build -o /out/ ./...
+COPY . ./
+RUN export GOPROXY=https://mirrors.aliyun.com/goproxy/ && go mod download
+RUN cd cmd/shortpaste && CGO_ENABLED=1 go build -o /out/ ./...
 
 FROM node:16.19.1-alpine3.17 as frontend-build
 
